@@ -1,0 +1,244 @@
+<div class="cursor" [class.cursor--hover]="cursorHover" [style.left.px]="cursorX" [style.top.px]="cursorY"></div>
+
+
+ 
+<header class="navbar" [class.scrolled]="scrolled">
+  <div class="navbar__inner">
+    <a class="navbar__logo" href="#hero">
+      <span class="navbar__logo-initials">Cédric-Armel ATEBA</span>
+      <span class="navbar__logo-dot"></span>
+    </a>
+
+    <nav class="navbar__nav" [class.open]="menuOpen">
+      <ul class="navbar__links">
+        <li *ngFor="let link of navLinks; let i = index">
+          <a [href]="link.href" (click)="menuOpen = false">
+            <span class="link-num">0{{i+1}}</span>
+            {{ link.label }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <button class="navbar__cta" (click)="downloadCV()">
+     Curriculum vitae  
+    </button>
+
+    <button class="navbar__burger" (click)="menuOpen = !menuOpen" [class.active]="menuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<section id="hero" class="hero">
+  <div class="hero__bg">
+    <div class="hero__grid"></div>
+    <div class="hero__orb hero__orb--1"></div>
+    <div class="hero__orb hero__orb--2"></div>
+  </div>
+
+  <div class="hero__content container">
+    <div class="hero__left">
+      <p class="hero__eyebrow">
+        <span class="hero__line"></span>
+        Full-Stack Developer & ERP SAP S/4HANA Consultant
+      </p>
+
+      <h1 class="hero__name">
+        <span class="hero__name-first">Développeur</span>
+        <em class="hero__name-last">d'Excellence</em>
+      </h1>
+
+      <p class="hero__tagline">
+        Angular · Django · Power Platform · SAP
+      </p>
+
+      <p class="hero__desc">
+        Architecte de solutions digitales sur mesure, je transforme vos idées
+        complexes en expériences numériques élégantes et performantes.
+      </p>
+
+      <div class="hero__actions">
+        <a href="https://github.com/CedricAteba23" class="btn btn--primary">
+          <span>Voir mes projets</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <a href="#contact" class="btn btn--ghost">Contactez-moi</a>
+      </div>
+    </div>
+
+    <div class="hero__right">
+      <div class="hero__avatar-wrap">
+        <div class="hero__avatar-ring"></div>
+        <div class="hero__avatar-ring hero__avatar-ring--2"></div>
+        <div class="hero__avatar">
+          <div class="hero__avatar-initials">CA</div>
+        </div>
+        <div class="hero__badge hero__badge--tl">
+          <span>5+</span>
+          <small>ans d'expérience</small>
+        </div>
+        <div class="hero__badge hero__badge--br">
+          <span>20+</span>
+          <small>projets livrés</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__scroll">
+    <span>Défiler</span>
+    <div class="hero__scroll-line"></div>
+  </div>
+</section>
+
+<section id="skills" class="skills">
+  <div class="container">
+    <div class="skills__header">
+      <p class="section-eyebrow">Expertise</p>
+      <h2 class="section-title">Mes <em>Compétences</em></h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="skills__grid">
+      <div class="skill-card" *ngFor="let skill of skills; let i = index"
+           [style.animation-delay]="i * 0.1 + 's'">
+        <div class="skill-card__icon">
+          <span [innerHTML]="skill.icon"></span>
+        </div>
+        <h3 class="skill-card__name">{{ skill.name }}</h3>
+        <p class="skill-card__desc">{{ skill.description }}</p>
+        <div class="skill-card__level">
+          <div class="skill-card__bar" [style.width]="skill.level + '%'"></div>
+        </div>
+        <span class="skill-card__percent">{{ skill.level }}%</span>
+        <div class="skill-card__glow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="projects">
+  <div class="container">
+    <div class="projects__header">
+      <p class="section-eyebrow">Réalisations</p>
+      <h2 class="section-title">Mes <em>Projets</em></h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="projects__filter">
+      <button *ngFor="let cat of categories"
+              [class.active]="activeCategory === cat"
+              (click)="filterProjects(cat)">
+        {{ cat }}
+      </button>
+    </div>
+
+    <div class="projects__grid">
+      <div class="project-card" *ngFor="let project of filteredProjects; let i = index"
+           [class.featured]="project.featured">
+        <div class="project-card__visual">
+          <div class="project-card__placeholder" [style.background]="project.color">
+            <span class="project-card__num">{{ (i + 1).toString().padStart(2, '0') }}</span>
+          </div>
+          <div class="project-card__overlay">
+            <a [href]="project.link" class="project-card__link" target="_blank">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              Voir le projet
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card__body">
+          <div class="project-card__tags">
+            <span *ngFor="let tag of project.tags">{{ tag }}</span>
+          </div>
+          <h3 class="project-card__title">{{ project.title }}</h3>
+          <p class="project-card__desc">{{ project.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certifications" class="certs">
+  <div class="container">
+    <div class="certs__header">
+      <p class="section-eyebrow">Reconnaissance</p>
+      <h2 class="section-title">Mes <em>Certifications</em></h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="certs__grid">
+      <div class="cert-card" *ngFor="let cert of certifications; let i = index"
+           [class.in-progress]="cert.inProgress"
+           [style.animation-delay]="i * 0.15 + 's'">
+        <div class="cert-card__header">
+          <div class="cert-card__icon" [innerHTML]="cert.icon"></div>
+          <div class="cert-card__status">
+            <span *ngIf="!cert.inProgress" class="status status--done">Obtenu</span>
+            <span *ngIf="cert.inProgress" class="status status--progress">En cours</span>
+          </div>
+        </div>
+        <div class="cert-card__body">
+          <p class="cert-card__org">{{ cert.organization }}</p>
+          <h3 class="cert-card__name">{{ cert.name }}</h3>
+          <p class="cert-card__date">{{ cert.date }}</p>
+        </div>
+        <div class="cert-card__progress" *ngIf="cert.inProgress">
+          <div class="cert-card__progress-bar" [style.width]="cert.progress + '%'"></div>
+          <span>{{ cert.progress }}% complété</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="contact__header">
+      <p class="section-eyebrow">Contact</p>
+      <h2 class="section-title">Travaillons <em>Ensemble</em></h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="contact__grid">
+      <div class="contact-card">
+        <h3>Email</h3>
+        <p>contact@cedric-ateba.com</p>
+      </div>
+
+      <div class="contact-card">
+        <h3>Téléphone</h3>
+        <p>+33 7 53 88 89 12</p>
+      </div>
+
+      <div class="contact-card">
+        <h3>Disponibilité</h3>
+        <p>CDI, CDD, missions freelance</p>
+      </div>
+    </div>
+
+    <form class="contact__form">
+      <input type="text" placeholder="Nom" />
+      <input type="email" placeholder="Email" />
+      <textarea placeholder="Votre message"></textarea>
+      <button class="btn btn--primary">Envoyer</button>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer__content">
+    <p class="footer__text">
+      © {{ currentYear }} Cédric-Armel ATEBA. Tous droits réservés.
+    </p>
+
+   
+  </div>
+</footer>
